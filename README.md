@@ -29,9 +29,9 @@ public boolean resolveWithBruteForce(int x, int y, int[][] tempBoard){
         }
         tempBoard[x][y] = 0;
         return false;
-	}
+}
   
-  private boolean isValid(int x, int y, int val, int[][] matrice) {
+private boolean isValid(int x, int y, int val, int[][] matrice) {
 	for (int riga = 0; riga < 9; riga++)
             if (matrice[riga][y] == val)
                 return false;
@@ -47,5 +47,5 @@ public boolean resolveWithBruteForce(int x, int y, int[][] tempBoard){
                 if (matrice[inizioRigaQuadrato + riga][inizioColonnaQuadrato + colonna] == val)
                     return false;
         return true;
-	}
+}
   ```
