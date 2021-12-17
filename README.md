@@ -1,2 +1,45 @@
-Based on some work done by Ali Hamdi Ali Fadel to group cells with similar value, this software implements a gui and also shows a schematic of the solution.
-![screenshot](https://user-images.githubusercontent.com/44254547/146518233-65203ebe-6dfb-4683-b869-023dafb9c9df.png)
+Simple sudoku solver, with a recursive brute force algorithm.
+
+![Schermata del 2021-12-17 10-07-09](https://user-images.githubusercontent.com/44254547/146520124-4d04fdf5-d522-4340-b247-01c0fdb406d0.png)
+
+```java
+public boolean resolveWithBruteForce(int x, int y, int[][] tempBoard){
+		refreshLabel(tempBoard);
+		
+		if (x == 9) {
+            x = 0;
+            if (++y == 9)
+                return true;
+        }
+        if (tempBoard[x][y] != 0) // salto le celle piene
+            return this.resolveWithBruteForce(x+1,y,tempBoard);
+
+        for (int val = 1; val <= 9; ++val) {
+            if (isValid(x,y,val,tempBoard)) {
+                tempBoard[x][y] = val;
+                if (this.resolveWithBruteForce(x+1,y,tempBoard))
+                    return true;
+            }
+        }
+        tempBoard[x][y] = 0;
+        return false;
+	}
+  
+  private boolean isValid(int x, int y, int val, int[][] matrice) {
+		for (int riga = 0; riga < 9; riga++)
+            if (matrice[riga][y] == val)
+                return false;
+
+        for (int colonna = 0; colonna < 9; colonna++){
+        	if (matrice[x][colonna] == val)
+                return false;
+        }
+        int inizioRigaQuadrato    = x - (x % 3);
+        int inizioColonnaQuadrato = y - (y % 3);
+        for (int riga = 0; riga < 3; riga++) 
+            for (int colonna = 0; colonna < 3; colonna++)
+                if (matrice[inizioRigaQuadrato + riga][inizioColonnaQuadrato + colonna] == val)
+                    return false;
+        return true;
+	}
+  ```
